@@ -19,6 +19,16 @@ type AddonsServer struct {
 	as.UnimplementedAddonsServiceServer
 }
 
+func (s AddonsServer) UpdateSection(ctx context.Context, in *as.UpdateSectionRequest) (*as.NoResponse, error) {
+	if err := in.ValidateAll(); err != nil {
+		return nil, err
+	}
+
+	fmt.Println(">valid request: ", in)
+
+	return &as.NoResponse{}, nil
+}
+
 func (s AddonsServer) ListSections(ctx context.Context, req *as.ListSectionsRequest) (*as.ListSectionsResponse, error) {
 	h := domain.Section{Handle: "some"}
 	ss := []*domain.Section{&h}
@@ -38,55 +48,52 @@ func (s AddonsServer) ListSections(ctx context.Context, req *as.ListSectionsRequ
 	return &resp, nil
 }
 
-func run() error {
-	ctx := context.Background()
-	ctx, cancel := context.WithCancel(ctx)
-	defer cancel()
-
+func runHttpProxy(ctx context.Context, addr string) error {
 	mux := http.NewServeMux()
 
-	// Register gRPC server endpoint
-	// Note: Make sure the gRPC server is running properly and accessible
+	fs := http.FileServer(http.Dir("./swagger"))
+	mux.Handle("/swagger/", http.StripPrefix("/swagger/", fs))
+
 	gwmux := runtime.NewServeMux()
+	mux.Handle("/", gwmux)
 
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	// opts := []grpc.DialOption{insecure.NewCredentials()}
 	err := as.RegisterAddonsServiceHandlerFromEndpoint(ctx, gwmux, grpcServerEndpoint, opts)
 	if err != nil {
 		return err
 	}
 
-	mux.Handle("/", gwmux)
+	// Start HTTP server (and proxy calls to gRPC server endpoint)
+	fmt.Println("Starting http proxy on ", addr)
 
-	mux.HandleFunc("/swagger/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(">> path: ", r.URL.Path)
-		fmt.Println(">> filepath: ", r.URL.Path[1:])
+	if err := http.ListenAndServe(addr, mux); err != nil {
+		fmt.Println(">> oi!", err)
+		return err
+	}
 
-		http.ServeFile(w, r, r.URL.Path[1:])
-	})
+	return nil
+}
 
-	// sh := http.StripPrefix("/swagger/", http.FileServer(http.Dir("./swagger/")))
-	fs := http.FileServer(http.Dir("./swagger"))
-	mux.Handle("/swagger2/", http.StripPrefix("/swagger2/", fs))
-	// r.PathPrefix("/swaggerui/").Handler(sh)
+func run() error {
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
 
 	s := AddonsServer{}
-	as.RegisterAddonsServiceHandlerServer(ctx, gwmux, s)
 
 	gs := grpc.NewServer()
 	as.RegisterAddonsServiceServer(gs, s)
 
-	l, err := net.Listen("tcp", "127.0.0.1:9090")
+	l, err := net.Listen("tcp", grpcServerEndpoint)
 
 	if err != nil {
 		return err
 	}
 
-	gs.Serve(l)
+	go runHttpProxy(ctx, ":8081")
 
-	// Start HTTP server (and proxy calls to gRPC server endpoint)
-	fmt.Println("Starting proxy on :8081...")
-	return http.ListenAndServe(":8081", mux)
+	fmt.Println("Starting grpc on ", grpcServerEndpoint)
+	return gs.Serve(l)
 }
 
 func main() {

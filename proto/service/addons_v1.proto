@@ -12,7 +12,7 @@ service AddonsService {
   rpc UpdateSection(UpdateSectionRequest) returns (NoResponse) {
       option (google.api.http) = {
         put: "/v1/addons/section/{handle}",
-	body: "update_section"
+	      body: "update_section"
     };
 }
   rpc ListSections(ListSectionsRequest) returns (ListSectionsResponse) {
@@ -25,8 +25,8 @@ service AddonsService {
 }
 
 message ListSectionsRequest {
-  domain.Locale locale = 1;
-  domain.YearWeek week = 2;
+  domain.Locale locale = 1 [(validate.rules).message = {required: true, skip: false}];
+  domain.YearWeek week = 2 [(validate.rules).message = {required: true, skip: false}];
 }
 
 message ListSectionsResponse {
@@ -34,14 +34,14 @@ message ListSectionsResponse {
 }
 
 message UpdateSection {
-  uint32 index = 2 [(validate.rules).uint32 = {gt:0, lt: 2030}];
+  uint32 index = 2 [(validate.rules).uint32 = {ignore_empty: false, gt:0, lt: 2030}];
   string description = 5;
   string image_uri = 6;
 }
 
 message UpdateSectionRequest {
   string handle = 1;
-  UpdateSection update_section = 3;
+  UpdateSection update_section = 3 [(validate.rules).message = {required: true, skip: false}];
 }
 
 message NoResponse {}

@@ -1,0 +1,246 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "service/addons_v1.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AddonsService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/addons/section/{handle}": {
+      "put": {
+        "operationId": "AddonsService_UpdateSection",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/addons_serviceNoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handle",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addons_serviceUpdateSection"
+            }
+          }
+        ],
+        "tags": [
+          "AddonsService"
+        ]
+      }
+    },
+    "/v1/addons/sections": {
+      "get": {
+        "operationId": "AddonsService_ListSections",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/addons_serviceListSectionsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "locale.lang",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "UNSPECIFIED",
+              "de",
+              "en",
+              "fr"
+            ],
+            "default": "UNSPECIFIED"
+          },
+          {
+            "name": "locale.country",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "UNDEFINED",
+              "DE",
+              "US"
+            ],
+            "default": "UNDEFINED"
+          },
+          {
+            "name": "week.year",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "week.week",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "AddonsService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "addons_serviceListSectionsResponse": {
+      "type": "object",
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/domainSection"
+          }
+        }
+      }
+    },
+    "addons_serviceNoResponse": {
+      "type": "object"
+    },
+    "addons_serviceUpdateSection": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "description": {
+          "type": "string"
+        },
+        "imageUri": {
+          "type": "string"
+        }
+      }
+    },
+    "domainCountry": {
+      "type": "string",
+      "enum": [
+        "UNDEFINED",
+        "DE",
+        "US"
+      ],
+      "default": "UNDEFINED"
+    },
+    "domainLanguage": {
+      "type": "string",
+      "enum": [
+        "UNSPECIFIED",
+        "de",
+        "en",
+        "fr"
+      ],
+      "default": "UNSPECIFIED"
+    },
+    "domainLocale": {
+      "type": "object",
+      "properties": {
+        "lang": {
+          "$ref": "#/definitions/domainLanguage"
+        },
+        "country": {
+          "$ref": "#/definitions/domainCountry"
+        }
+      }
+    },
+    "domainSection": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string"
+        },
+        "index": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "singular": {
+          "type": "string"
+        },
+        "plural": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "imageUri": {
+          "type": "string"
+        }
+      }
+    },
+    "domainYearWeek": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "week": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
