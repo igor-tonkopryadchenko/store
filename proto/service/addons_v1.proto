@@ -4,7 +4,7 @@ package addons_service;
 option go_package = "github.com/igor-tonkopryadchenko/store/addons_service";
 
 import "domain/addons_v1.proto";
-import "google/api/client.proto";
+// import "google/api/client.proto";
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
