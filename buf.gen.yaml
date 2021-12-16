@@ -1,0 +1,25 @@
+version: v1
+plugins:
+  - name: go
+    out: ./domain
+    opt:
+      - paths=source_relative
+
+  - name: go-grpc
+    out: ./grpc
+    opt:
+      - paths=source_relative
+
+  - name: validate
+    out: ./grpc
+    opt:
+      - paths=source_relative
+      - lang=go
+
+  - name: grpc-gateway
+    out: ./grpc-gw
+    opt:
+      - paths=source_relative
+
+  - name: openapiv2
+    out: ./swagger/

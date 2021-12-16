@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package domain;
+option go_package = "github.com/igor-tonkopryadchenko/store/domain";
+
+import "validate/validate.proto";
+
+enum Country {
+  UNDEFINED = 0;
+  DE = 1;
+  US = 2;
+}
+
+enum Language {
+  UNSPECIFIED = 0;
+  de = 1;
+  en = 2;
+  fr = 3;
+}
+
+message Locale {
+  Language lang = 1  [(validate.rules).enum.defined_only = true];
+  Country country = 2  [(validate.rules).enum.defined_only = true];
+}
+
+message YearWeek {
+  uint32 year = 1 [(validate.rules).uint32 = {gte:2010, lt: 2030}];
+  uint32 week = 2 [(validate.rules).uint32 = {gte:1, lte: 52}];
+}
+
+message Section {
+  string handle = 1;
+  int32 index = 2;
+  string singular = 3;
+  string plural = 4;
+  string description = 5;
+  string image_uri = 6;
+}
