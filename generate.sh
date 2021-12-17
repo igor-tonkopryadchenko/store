@@ -1,6 +1,6 @@
 #!/bin/env/sh
 protoc \
-	-I ./vendor/github.com/googleapis \
+	-I ./tools/googleapis \
 	-I ./vendor/github.com/grpc-ecosystem/grpc-gateway/v2 \
 	-I ./vendor/github.com/envoyproxy/protoc-gen-validate \
 	-I ./proto \
