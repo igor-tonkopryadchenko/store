@@ -36,7 +36,11 @@ func (s AddonsServer) ListSections(ctx context.Context, req *as.ListSectionsRequ
 	resp := as.ListSectionsResponse{Sections: ss}
 
 	fmt.Println("req", req)
-	fmt.Println("req valid?", req.ValidateAll())
+
+	if err := req.ValidateAll(); err != nil {
+		fmt.Println("req invalid:", err)
+		return nil, err
+	}
 
 	w := domain.YearWeek{Year: 1998, Week: 44}
 	fmt.Println("week valid?", w.String(), w.ValidateAll())
