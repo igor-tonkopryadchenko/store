@@ -1,23 +1,22 @@
 syntax = "proto3";
 
-package addons_service;
-option go_package = "github.com/igor-tonkopryadchenko/store/addons_service";
+package store_service;
+option go_package = "github.com/igor-tonkopryadchenko/store/service";
 
 import "domain/addons_v1.proto";
 // import "google/api/client.proto";
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
-service AddonsService {
+service StoreService {
   rpc UpdateSection(UpdateSectionRequest) returns (NoResponse) {
       option (google.api.http) = {
         put: "/v1/addons/section/{handle}",
 	      body: "update_section"
     };
-}
-  rpc ListSections(ListSectionsRequest) returns (ListSectionsResponse) {
-      // option (google.api.method_signature) = "";
+  }
 
+  rpc ListSections(ListSectionsRequest) returns (ListSectionsResponse) {
       option (google.api.http) = {
         get: "/v1/addons/sections"
     };

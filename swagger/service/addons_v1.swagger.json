@@ -6,7 +6,7 @@
   },
   "tags": [
     {
-      "name": "AddonsService"
+      "name": "StoreService"
     }
   ],
   "consumes": [
@@ -18,12 +18,12 @@
   "paths": {
     "/v1/addons/section/{handle}": {
       "put": {
-        "operationId": "AddonsService_UpdateSection",
+        "operationId": "StoreService_UpdateSection",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/addons_serviceNoResponse"
+              "$ref": "#/definitions/store_serviceNoResponse"
             }
           },
           "default": {
@@ -45,23 +45,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/addons_serviceUpdateSection"
+              "$ref": "#/definitions/store_serviceUpdateSection"
             }
           }
         ],
         "tags": [
-          "AddonsService"
+          "StoreService"
         ]
       }
     },
     "/v1/addons/sections": {
       "get": {
-        "operationId": "AddonsService_ListSections",
+        "operationId": "StoreService_ListSections",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/addons_serviceListSectionsResponse"
+              "$ref": "#/definitions/store_serviceListSectionsResponse"
             }
           },
           "default": {
@@ -113,41 +113,12 @@
           }
         ],
         "tags": [
-          "AddonsService"
+          "StoreService"
         ]
       }
     }
   },
   "definitions": {
-    "addons_serviceListSectionsResponse": {
-      "type": "object",
-      "properties": {
-        "sections": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/domainSection"
-          }
-        }
-      }
-    },
-    "addons_serviceNoResponse": {
-      "type": "object"
-    },
-    "addons_serviceUpdateSection": {
-      "type": "object",
-      "properties": {
-        "index": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "description": {
-          "type": "string"
-        },
-        "imageUri": {
-          "type": "string"
-        }
-      }
-    },
     "domainCountry": {
       "type": "string",
       "enum": [
@@ -239,6 +210,35 @@
           "items": {
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "store_serviceListSectionsResponse": {
+      "type": "object",
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/domainSection"
+          }
+        }
+      }
+    },
+    "store_serviceNoResponse": {
+      "type": "object"
+    },
+    "store_serviceUpdateSection": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "description": {
+          "type": "string"
+        },
+        "imageUri": {
+          "type": "string"
         }
       }
     }

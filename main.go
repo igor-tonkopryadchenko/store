@@ -16,7 +16,7 @@ import (
 const grpcServerEndpoint = "localhost:9090"
 
 type AddonsServer struct {
-	as.UnimplementedAddonsServiceServer
+	as.UnimplementedStoreServiceServer
 }
 
 func (s AddonsServer) UpdateSection(ctx context.Context, in *as.UpdateSectionRequest) (*as.NoResponse, error) {
@@ -62,7 +62,7 @@ func runHttpProxy(ctx context.Context, addr string) error {
 	mux.Handle("/", gwmux)
 
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := as.RegisterAddonsServiceHandlerFromEndpoint(ctx, gwmux, grpcServerEndpoint, opts)
+	err := as.RegisterStoreServiceHandlerFromEndpoint(ctx, gwmux, grpcServerEndpoint, opts)
 	if err != nil {
 		return err
 	}
@@ -86,7 +86,7 @@ func run() error {
 	s := AddonsServer{}
 
 	gs := grpc.NewServer()
-	as.RegisterAddonsServiceServer(gs, s)
+	as.RegisterStoreServiceServer(gs, s)
 
 	l, err := net.Listen("tcp", grpcServerEndpoint)
 

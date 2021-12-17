@@ -2,11 +2,11 @@
 // source: service/addons_v1.proto
 
 /*
-Package addons_service is a reverse proxy.
+Package service is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package addons_service
+package service
 
 import (
 	"context"
@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_AddonsService_UpdateSection_0(ctx context.Context, marshaler runtime.Marshaler, client AddonsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_StoreService_UpdateSection_0(ctx context.Context, marshaler runtime.Marshaler, client StoreServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateSectionRequest
 	var metadata runtime.ServerMetadata
 
@@ -65,7 +65,7 @@ func request_AddonsService_UpdateSection_0(ctx context.Context, marshaler runtim
 
 }
 
-func local_request_AddonsService_UpdateSection_0(ctx context.Context, marshaler runtime.Marshaler, server AddonsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_StoreService_UpdateSection_0(ctx context.Context, marshaler runtime.Marshaler, server StoreServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateSectionRequest
 	var metadata runtime.ServerMetadata
 
@@ -100,17 +100,17 @@ func local_request_AddonsService_UpdateSection_0(ctx context.Context, marshaler 
 }
 
 var (
-	filter_AddonsService_ListSections_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_StoreService_ListSections_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_AddonsService_ListSections_0(ctx context.Context, marshaler runtime.Marshaler, client AddonsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_StoreService_ListSections_0(ctx context.Context, marshaler runtime.Marshaler, client StoreServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListSectionsRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_AddonsService_ListSections_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_StoreService_ListSections_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -119,14 +119,14 @@ func request_AddonsService_ListSections_0(ctx context.Context, marshaler runtime
 
 }
 
-func local_request_AddonsService_ListSections_0(ctx context.Context, marshaler runtime.Marshaler, server AddonsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_StoreService_ListSections_0(ctx context.Context, marshaler runtime.Marshaler, server StoreServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListSectionsRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_AddonsService_ListSections_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_StoreService_ListSections_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -135,24 +135,24 @@ func local_request_AddonsService_ListSections_0(ctx context.Context, marshaler r
 
 }
 
-// RegisterAddonsServiceHandlerServer registers the http handlers for service AddonsService to "mux".
-// UnaryRPC     :call AddonsServiceServer directly.
+// RegisterStoreServiceHandlerServer registers the http handlers for service StoreService to "mux".
+// UnaryRPC     :call StoreServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterAddonsServiceHandlerFromEndpoint instead.
-func RegisterAddonsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server AddonsServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterStoreServiceHandlerFromEndpoint instead.
+func RegisterStoreServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server StoreServiceServer) error {
 
-	mux.Handle("PUT", pattern_AddonsService_UpdateSection_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_StoreService_UpdateSection_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/addons_service.AddonsService/UpdateSection", runtime.WithHTTPPathPattern("/v1/addons/section/{handle}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/store_service.StoreService/UpdateSection", runtime.WithHTTPPathPattern("/v1/addons/section/{handle}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_AddonsService_UpdateSection_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_StoreService_UpdateSection_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -160,22 +160,22 @@ func RegisterAddonsServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_AddonsService_UpdateSection_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_StoreService_UpdateSection_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_AddonsService_ListSections_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_StoreService_ListSections_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/addons_service.AddonsService/ListSections", runtime.WithHTTPPathPattern("/v1/addons/sections"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/store_service.StoreService/ListSections", runtime.WithHTTPPathPattern("/v1/addons/sections"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_AddonsService_ListSections_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_StoreService_ListSections_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -183,16 +183,16 @@ func RegisterAddonsServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_AddonsService_ListSections_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_StoreService_ListSections_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterAddonsServiceHandlerFromEndpoint is same as RegisterAddonsServiceHandler but
+// RegisterStoreServiceHandlerFromEndpoint is same as RegisterStoreServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterAddonsServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterStoreServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -212,59 +212,59 @@ func RegisterAddonsServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.
 		}()
 	}()
 
-	return RegisterAddonsServiceHandler(ctx, mux, conn)
+	return RegisterStoreServiceHandler(ctx, mux, conn)
 }
 
-// RegisterAddonsServiceHandler registers the http handlers for service AddonsService to "mux".
+// RegisterStoreServiceHandler registers the http handlers for service StoreService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterAddonsServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterAddonsServiceHandlerClient(ctx, mux, NewAddonsServiceClient(conn))
+func RegisterStoreServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterStoreServiceHandlerClient(ctx, mux, NewStoreServiceClient(conn))
 }
 
-// RegisterAddonsServiceHandlerClient registers the http handlers for service AddonsService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "AddonsServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "AddonsServiceClient"
+// RegisterStoreServiceHandlerClient registers the http handlers for service StoreService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "StoreServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "StoreServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "AddonsServiceClient" to call the correct interceptors.
-func RegisterAddonsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client AddonsServiceClient) error {
+// "StoreServiceClient" to call the correct interceptors.
+func RegisterStoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client StoreServiceClient) error {
 
-	mux.Handle("PUT", pattern_AddonsService_UpdateSection_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_StoreService_UpdateSection_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/addons_service.AddonsService/UpdateSection", runtime.WithHTTPPathPattern("/v1/addons/section/{handle}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/store_service.StoreService/UpdateSection", runtime.WithHTTPPathPattern("/v1/addons/section/{handle}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_AddonsService_UpdateSection_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_StoreService_UpdateSection_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_AddonsService_UpdateSection_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_StoreService_UpdateSection_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_AddonsService_ListSections_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_StoreService_ListSections_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/addons_service.AddonsService/ListSections", runtime.WithHTTPPathPattern("/v1/addons/sections"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/store_service.StoreService/ListSections", runtime.WithHTTPPathPattern("/v1/addons/sections"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_AddonsService_ListSections_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_StoreService_ListSections_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_AddonsService_ListSections_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_StoreService_ListSections_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -272,13 +272,13 @@ func RegisterAddonsServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 }
 
 var (
-	pattern_AddonsService_UpdateSection_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "addons", "section", "handle"}, ""))
+	pattern_StoreService_UpdateSection_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "addons", "section", "handle"}, ""))
 
-	pattern_AddonsService_ListSections_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "addons", "sections"}, ""))
+	pattern_StoreService_ListSections_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "addons", "sections"}, ""))
 )
 
 var (
-	forward_AddonsService_UpdateSection_0 = runtime.ForwardResponseMessage
+	forward_StoreService_UpdateSection_0 = runtime.ForwardResponseMessage
 
-	forward_AddonsService_ListSections_0 = runtime.ForwardResponseMessage
+	forward_StoreService_ListSections_0 = runtime.ForwardResponseMessage
 )
